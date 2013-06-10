@@ -1,0 +1,17 @@
+{
+  "name": "leapLamp",
+  "version": "0.0.1",
+  "description": "A pixar like lamp based on node.js, johnny-five and arduino",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "Xavier Seignard <xavier.seignard@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "async": "~0.2.9",
+    "johnny-five": "~0.6.2",
+    "ws": "~0.4.25"
+  }
+}
