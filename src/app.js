@@ -22,7 +22,7 @@ board.on('ready', function() {
     minPos: 0,
     maxPos: 50,
     pin: 10,
-    range: [60,175]
+    range: [70,170]
   });
 
   var middle = new Joint({
@@ -33,13 +33,13 @@ board.on('ready', function() {
     range: [10,170]
   });
 
-  var basis = new Joint({
-    // frame.palmPosition.x tracked range
-    minPos: 50,
-    maxPos: 200,
-    pin: 6,
-    range: [10,170]
-  });
+  // var basis = new Joint({
+  //   // frame.palmPosition.x tracked range
+  //   minPos: 50,
+  //   maxPos: 200,
+  //   pin: 6,
+  //   range: [10,170]
+  // });
 
 
   ws.on('message', function(data, flags) {
@@ -50,8 +50,8 @@ board.on('ready', function() {
       if(frame.valid) {
         headNod.move(frame.deltaHandFinger.y);
         headBulb.move(frame.deltaHandFinger.x);
-        //middle.move(frame.palmPosition.y);
-        //basis.move(frame.palmPosition.x);
+        middle.move(frame.palmPosition.y);
+        // basis.move(frame.palmPosition.x);
       }
       i=0;
     }
