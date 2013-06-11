@@ -27,10 +27,10 @@ board.on('ready', function() {
 
   var middle = new Joint({
     // frame.palmPosition.y tracked range
-    minPos: 50,
-    maxPos: 200,
-    pin: 11,
-    range: [10,170]
+    minPos: 70,
+    maxPos: 220,
+    pin: 6,
+    range: [60,150]
   });
 
   // var basis = new Joint({
