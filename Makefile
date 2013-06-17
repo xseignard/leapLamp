@@ -20,7 +20,6 @@ coverage:
 	$(ISTANBUL) cover --dir ./reports $(_MOCHA) -- -R spec $(TESTS)
 
 run: 
-	Leap &
 	node src/app.js
 
 .PHONY: clean test jshint coverage run
