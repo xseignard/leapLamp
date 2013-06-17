@@ -15,3 +15,6 @@ Since there is no lib to directly connect the Leapmotion to the Arduino, I used 
 - Connect the Leapmotion and the Arduino
 - Run the Leap websocket server
 - Run `make run`
+
+
+You can see a video here: https://vimeo.com/68530396
