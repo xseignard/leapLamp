@@ -4,7 +4,7 @@ var five = require('johnny-five'),
     board = new five.Board(),
     LeapFrame = require('./lib/leapFrame'),
     Joint = require('./lib/joint'),
-    frame, min, max,
+    frame,
     i=0;
 
 board.on('ready', function() {

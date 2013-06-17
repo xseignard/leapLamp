@@ -8,10 +8,24 @@ var Joint = function(opts) {
 		minPos = opts.minPos,
 		// highest position tracked
 		maxPos = opts.maxPos,
-		servo = new five.Servo({
+		_servo;
+
+	// quick and dirty mocking
+	if (opts.pin === 'fake') {
+		_servo = {
+			lastMove: 0,
+			move: function(angle) {
+				this.lastMove = angle;
+			},
+			range: opts.range
+		};
+	}	
+	else {
+		_servo = new five.Servo({
 			pin: opts.pin,
 			range: opts.range
 		});
+	}
 
 	/**
 	 * Move the joint of the calculated angle
@@ -24,7 +38,7 @@ var Joint = function(opts) {
 			pos = constraint(pos);
 		}
 		angle = _scale(pos);
-		servo.move(angle);
+		_servo.move(angle);
 	};
 
 	/**
@@ -41,10 +55,11 @@ var Joint = function(opts) {
 		else if (pos>maxPos) {
 			pos = maxPos;
 		}
-		return Math.floor(five.Fn.map(pos, minPos, maxPos, servo.range[0], servo.range[1]));
+		return Math.floor(five.Fn.map(pos, minPos, maxPos, _servo.range[0], _servo.range[1]));
 	};
 
 	return {
+		servo: _servo,
 		move: _move,
 		scale: _scale
 	};
