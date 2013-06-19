@@ -4,7 +4,7 @@
 var five = require('johnny-five'),
 	sinon = require('sinon');
 
-var fiveMocks = {
+var fiveStubs = {
 	// stub that mimics the johnny-five Servo class
 	// at least what I need from that class, i.e. the move function
 	ServoStub : function() {
@@ -21,5 +21,5 @@ var fiveMocks = {
 	}
 };
 
-module.exports = fiveMocks;
+module.exports = fiveStubs;
 	

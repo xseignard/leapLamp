@@ -1,6 +1,6 @@
 'use strict';
 var assert = require('assert'),
-	fiveMocks = require('./five.stubs'),
+	fiveStubs = require('./five.stubs'),
 	Joint = require('../../src/lib/joint'),
 	servoStub, joint;
 
@@ -8,7 +8,7 @@ describe('Joint', function() {
 
 	beforeEach(function(){
 		// get the stubbed servo
-		servoStub = fiveMocks.ServoStub();
+		servoStub = fiveStubs.ServoStub();
 		// the constructor will now rely on the stubbed servo
 		joint = new Joint({
 			minPos: 50,
