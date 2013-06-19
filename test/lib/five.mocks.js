@@ -22,5 +22,4 @@ var fiveMocks = {
 };
 
 module.exports = fiveMocks;
-
 	
