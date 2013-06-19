@@ -1,14 +1,26 @@
 'use strict';
 var assert = require('assert'),
+	fiveMocks = require('./five.mocks'),
 	Joint = require('../../src/lib/joint'),
-	joint = new Joint({
-		minPos: 50,
-		maxPos: 100,
-		pin: 'fake',
-		range: [60,120]
-	});
+	servoStub, joint;
 
 describe('Joint', function() {
+
+	beforeEach(function(){
+		// get the stubbed servo
+		servoStub = fiveMocks.ServoStub();
+		// the constructor will now rely on the stubbed servo
+		joint = new Joint({
+			minPos: 50,
+			maxPos: 100,
+			pin: 9,
+			range: [60,120]
+		});
+	});
+
+	afterEach(function(){
+		servoStub.restore();
+	});
 
 	describe('#move()', function() {
 		it('should move to 90 degrees', function() {

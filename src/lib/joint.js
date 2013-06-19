@@ -8,24 +8,11 @@ var Joint = function(opts) {
 		minPos = opts.minPos,
 		// highest position tracked
 		maxPos = opts.maxPos,
-		_servo;
-
-	// quick and dirty mocking
-	if (opts.pin === 'fake') {
-		_servo = {
-			lastMove: 0,
-			move: function(angle) {
-				this.lastMove = angle;
-			},
-			range: opts.range
-		};
-	}	
-	else {
+		// servo instance that handle this joint
 		_servo = new five.Servo({
 			pin: opts.pin,
 			range: opts.range
 		});
-	}
 
 	/**
 	 * Move the joint of the calculated angle
