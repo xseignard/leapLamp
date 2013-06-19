@@ -1,6 +1,6 @@
 'use strict';
 var assert = require('assert'),
-	fiveMocks = require('./five.stubs'),
+	fiveStubs = require('./five.stubs'),
 	Joint = require('../../src/lib/joint'),
 	servoStub, joint;
 
