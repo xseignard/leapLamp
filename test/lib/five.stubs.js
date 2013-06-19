@@ -1,11 +1,11 @@
 /**
- * Johnny-five mocks
+ * Johnny-five stubs
  */
 var five = require('johnny-five'),
 	sinon = require('sinon');
 
 var fiveMocks = {
-	//stub that mimics the johnny-five Servo class
+	// stub that mimics the johnny-five Servo class
 	// at least what I need from that class, i.e. the move function
 	ServoStub : function() {
 		var stub = sinon.stub(five, 'Servo', function(opts) {
