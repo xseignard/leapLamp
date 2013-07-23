@@ -1,4 +1,4 @@
-leapLamp
+leapLamp [![Build Status](https://travis-ci.org/xseignard/leapLamp.png?branch=master)](https://travis-ci.org/xseignard/leapLamp)
 ========
 
 # Description
