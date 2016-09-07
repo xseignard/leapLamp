@@ -27,7 +27,7 @@ class Joint {
 		if (constraint) constrainedPos = constraint(pos);
 		else constrainedPos = pos;
 		const angle = this.scale(constrainedPos);
-		this.servo.move(angle);
+		this.servo.to(angle);
 	}
 
 	/**
