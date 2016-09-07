@@ -1,55 +1,57 @@
-/**
- * Joint of the arm 
- */
-var Joint = function(opts) {
+const five = require('johnny-five');
 
-	var five = require('johnny-five'),
-		//lowest hand postion tracked
-		minPos = opts.minPos,
+/**
+ * Joint of the arm
+ */
+class Joint {
+
+	constructor(opts) {
+		// lowest hand postion tracked
+		this.minPos = opts.minPos;
 		// highest position tracked
-		maxPos = opts.maxPos,
+		this.maxPos = opts.maxPos;
 		// servo instance that handle this joint
-		_servo = new five.Servo({
+		this.servo = new five.Servo({
 			pin: opts.pin,
-			range: opts.range
+			range: opts.range,
 		});
+	}
 
 	/**
 	 * Move the joint of the calculated angle
 	 * @param {Number} pos - tracked hand/finger position
 	 * @param {function()} constraint - if present, a constraint to apply to the current position
 	 */
-	var _move = function(pos, constraint) {
-		var angle;
-		if (constraint) {
-			pos = constraint(pos);
-		}
-		angle = _scale(pos);
-		_servo.move(angle);
-	};
+	move(pos, constraint) {
+		let constrainedPos;
+		if (constraint) constrainedPos = constraint(pos);
+		else constrainedPos = pos;
+		const angle = this.scale(constrainedPos);
+		this.servo.move(angle);
+	}
 
 	/**
 	 * Map a given position to the corresponding angle
 	 * @param {Number} pos - positon to map from its range to the range of angle
 	 * @return {Number} the corresponding angle
 	 */
-	var _scale = function(pos) {
+	scale(pos) {
 		// if current hand/finger position is outside the tracked range
 		// get the nearest tracked limit
-		if (pos<minPos) {
-			pos = minPos;
-		}
-		else if (pos>maxPos) {
-			pos = maxPos;
-		}
-		return Math.floor(five.Fn.map(pos, minPos, maxPos, _servo.range[0], _servo.range[1]));
-	};
-
-	return {
-		servo: _servo,
-		move: _move,
-		scale: _scale
-	};
-};
+		let constrainedPos;
+		if (pos < this.minPos) constrainedPos = this.minPos;
+		else if (pos > this.maxPos) constrainedPos = this.maxPos;
+		else constrainedPos = pos;
+		return Math.floor(
+			five.Fn.map(
+				constrainedPos,
+				this.minPos,
+				this.maxPos,
+				this.servo.range[0],
+				this.servo.range[1]
+			)
+		);
+	}
+}
 
 module.exports = Joint;

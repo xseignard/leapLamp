@@ -1,0 +1,15 @@
+{
+	"parser": "babel-eslint",
+	"extends": "airbnb",
+	"rules": {
+		"indent": [2, "tab", {"SwitchCase": 1}],
+		"no-console": 0,
+		"new-cap": 0,
+		"no-underscore-dangle": 0,
+		"brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
+	},
+	"env": {
+		"mocha": true,
+		"node": true,
+	},
+}
