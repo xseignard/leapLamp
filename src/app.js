@@ -3,54 +3,72 @@ const Leap = require('leapjs');
 const LeapFrame = require('./lib/leapFrame');
 const Joint = require('./lib/joint');
 
-const controller = new Leap.Controller();
+const controller = new Leap.Controller({ enableGestures: true });
 const board = new five.Board();
 
 let frame;
 let i = 0;
 
-board.on('ready', () => {
-	const headBulb = new Joint({
-		minPos: -60,
-		maxPos: 30,
-		pin: 9,
-		range: [60, 175],
-	});
 
-	const headNod = new Joint({
-		minPos: 0,
-		maxPos: 50,
-		pin: 10,
-		range: [70, 170],
-	});
+try {
+	board.on('ready', () => {
+		const headBulb = new Joint({
+			minPos: -60,
+			maxPos: 30,
+			pin: 9,
+			range: [60, 175],
+		});
 
-	const middle = new Joint({
-		minPos: 70,
-		maxPos: 220,
-		pin: 6,
-		range: [60, 150],
-	});
+		const headNod = new Joint({
+			minPos: 0,
+			maxPos: 50,
+			pin: 10,
+			range: [70, 170],
+		});
 
-	// const basis = new Joint({
-	// 	minPos: 50,
-	// 	maxPos: 200,
-	// 	pin: 6,
-	// 	range: [10, 170],
-	// });
+		const middle = new Joint({
+			minPos: 70,
+			maxPos: 220,
+			pin: 6,
+			range: [60, 150],
+		});
 
-	controller.on('frame', (data) => {
-		i++;
-		// track only 40frame/s
-		if (i % 3 === 0) {
-			frame = new LeapFrame(data);
-			if (frame.valid) {
-				headNod.move(frame.deltaHandFinger.y);
-				headBulb.move(frame.deltaHandFinger.x);
-				middle.move(frame.palmPosition.y);
-				// basis.move(frame.palmPosition.x);
+		// const basis = new Joint({
+		// 	minPos: 50,
+		// 	maxPos: 200,
+		// 	pin: 6,
+		// 	range: [10, 170],
+		// });
+
+		const relay = new five.Relay(2);
+
+		controller.on('frame', (data) => {
+			i++;
+			// track only 40frame/s
+			if (i % 3 === 0) {
+				frame = new LeapFrame(data);
+				if (frame.valid) {
+					headNod.move(frame.deltaHandFinger.y);
+					headBulb.move(frame.deltaHandFinger.x);
+					middle.move(frame.palmPosition.y);
+					// basis.move(frame.palmPosition.x);
+				}
+				i = 0;
 			}
-			i = 0;
-		}
+		});
+		controller.on('gesture', (gesture) => {
+			if (
+				gesture.type === 'circle'
+				&& gesture.state === 'stop'
+				&& gesture.radius > 50
+			) {
+				console.log(gesture);
+				relay.toggle();
+			}
+		});
+		controller.connect();
 	});
-	controller.connect();
-});
+}
+catch (e) {
+	console.log(`Some error happened: ${e}`);
+}
